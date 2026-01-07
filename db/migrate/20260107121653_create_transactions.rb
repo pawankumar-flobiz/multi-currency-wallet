@@ -3,7 +3,7 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
     create_table :transactions do |t|
       t.references :user, null: false, foreign_key: true
       
-
+      t.bigint :receiver_id, null: false
       t.bigint :sender_wallet_id
       t.bigint :receiver_wallet_id
 
@@ -24,5 +24,6 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
 
     add_foreign_key :transactions, :wallets,column: :sender_wallet_id
     add_foreign_key :transactions, :wallets,column: :receiver_wallet_id
+    add_foreign_key :transactions, :users, column: :receiver_id
   end
 end
