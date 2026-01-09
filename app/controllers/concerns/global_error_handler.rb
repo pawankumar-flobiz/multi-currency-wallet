@@ -33,7 +33,7 @@ module GlobalErrorHandler
         message: error.record.errors.full_messages.join(", "),
         code: "RECORD_INVALID" 
       }
-    }, status: 422
+    }, status: 400
   end
 
   def handle_standard_error(error)
