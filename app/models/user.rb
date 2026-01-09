@@ -13,4 +13,18 @@ class User < ApplicationRecord
            class_name: 'Transaction',
            foreign_key: :receiver_id,
            dependent: :restrict_with_error
+
+  validates :name, presence: true
+  validates  :email, presence: true ,
+                uniqueness: {
+                    condition: ->{where(deleted_at:nil)}    
+                }
+
+  validates :password, presence: true, on: :create
+
+  scope :active, ->{where(deleted_at: nil)}  
+
+  def email_verified?
+    email_verified_at.present?
+  end
 end           
