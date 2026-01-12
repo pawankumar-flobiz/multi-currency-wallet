@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
-  has_one_time_password
+  has_one_time_password interval:Settings.otp.expiry.to_i*60 #convert minute in second so that otp will refresh at that interval
   
   has_many :wallets, dependent: :restrict_with_error
 

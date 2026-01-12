@@ -2,10 +2,10 @@ module GlobalErrorHandler
   extend ActiveSupport::Concern
 
   included do
-    rescue_from ApplicationError, with: :handle_application_error
-    rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
-    rescue_from ActiveRecord::RecordInvalid, with: :handle_record_invalid
     rescue_from StandardError, with: :handle_standard_error
+    rescue_from ActiveRecord::RecordInvalid, with: :handle_record_invalid
+    rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+    rescue_from ApplicationError, with: :handle_application_error
   end
 
   private
@@ -37,6 +37,7 @@ module GlobalErrorHandler
   end
 
   def handle_standard_error(error)
+    Rails.logger.error "Error #{error.inspect}"
     render json: { 
       error: {
         message: "Internal server error",

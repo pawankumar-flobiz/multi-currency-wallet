@@ -17,4 +17,7 @@ Rails.application.routes.draw do
       post "logout", to: "logout#logout_user"
     end
   end
+  #health check route
+      get "health", to: "health#index"
+      post "health/check", to: "health#dataFromPost"
 end

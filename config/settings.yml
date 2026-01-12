@@ -5,3 +5,10 @@ jwt:
 redis:
   url: <%= ENV.fetch('REDIS_URL', 'redis://localhost:6379/1') %>
   otp_expiry: <%= ENV.fetch('REDIS_OTP_EXPIRY', 300) %>
+
+otp:
+  expiry: <%= ENV.fetch('OTP_EXPIRY') %>
+
+email:
+  username: <%= ENV.fetch("EMAIL_USERNAME")%>  
+  password: <%= ENV.fetch("EMAIL_PASSWORD")%>  
