@@ -118,6 +118,9 @@ GEM
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     io-wait (0.3.1)
+    jbuilder (2.13.0)
+      actionview (>= 5.0.0)
+      activesupport (>= 5.0.0)
     jwt (3.1.2)
       base64
     listen (3.9.0)
@@ -237,6 +240,7 @@ DEPENDENCIES
   byebug
   config
   dotenv-rails
+  jbuilder
   jwt
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)

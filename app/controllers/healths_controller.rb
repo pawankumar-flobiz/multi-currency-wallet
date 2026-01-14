@@ -1,13 +1,13 @@
-# this simple check that every working or not
-class HealthController < ApplicationController
-  include Authentication
+# this simple check that everything  working or not
+class HealthsController < ApplicationController
+
   def index
     user=current_user
     render json: { status: 'OK'}, status: :ok
   end
 
-  def dataFromPost
-    Rails.logger.info "HealthController: Received dataFromPost with params: #{params.inspect}"
+  def get_data_request
+    Rails.logger.info "HealthController: Received get_data_request with params: #{params.inspect}"
     render json: { message: 'Data received successfully', data: health_params }, status: :ok  
   end
 

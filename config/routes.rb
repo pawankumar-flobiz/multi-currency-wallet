@@ -3,21 +3,21 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :auth do
       #signup routes
-      post "signup/request" ,to: "signup#request_otp"
-      post "signup/verify" ,to: "signup#verify_otp"
+      post "signup/request" ,to: "/api/auth#signup_request"
+      post "signup/verify" ,to: "/api/auth#email_verify"
 
       #login routes
-      post "login/request" ,to: "login#request_otp"
-      post "login/verify" ,to: "login#verify_otp"
+      post "login/request" ,to: "/api/auth#login_request"
+      post "login/verify" ,to: "/api/auth#login_verify"
 
       #check email route
-      post "check_email", to: "auth#check_email"
+      post "check_email", to: "/api/auth#check_email"
       
       #logout route
-      post "logout", to: "logout#logout_user"
+      post "logout", to: "/api/auth#logout_user"
     end
   end
   #health check route
-      get "health", to: "health#index"
-      post "health/check", to: "health#dataFromPost"
+  get "health", to: "healths#index"
+  post "health/check", to: "healths#get_data_request"
 end

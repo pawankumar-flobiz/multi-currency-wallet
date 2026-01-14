@@ -2,16 +2,18 @@ module Authentication
   extend ActiveSupport::Concern
   included do
     before_action :authenticate_request
+    helper_method :current_user
   end
 
   private
 
   def authenticate_request
     token = extract_token
-    unless Auth::JwtService.session_exists?(token)
+    payload = JwtService.decode(token)
+    unless JwtService.session_exists?(payload["user_id"])
       raise AuthenticationError.new("Session expired or logged out")
     end
-    payload = Auth::JwtService.decode(token)
+   
     @current_user = User.active.find_by!(id: payload["user_id"])
   rescue ActiveRecord::RecordNotFound
     raise AuthenticationError.new("Invalid token or user not found")
