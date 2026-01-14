@@ -30,7 +30,7 @@ class Api::AuthController <ApplicationController
 
   #POST api/auth/login/request
   def login_request
-    user=AuthService.login_request(auth_params)
+    @user=AuthService.login_request(auth_params)
     render :login_request ,status: :ok
   end    
 
