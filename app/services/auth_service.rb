@@ -80,9 +80,9 @@ class AuthService
     }
   end
 
-  def self.logout_user(user_id:,token:)
-    JwtService.delete(token)
-    true
+  def self.logout_user(user_id)
+    result=JwtService.delete(user_id)
+    raise ApplicationError.new("An application error occure please try again",status: 500,code:"APPLICATION_ERROR") if result==0
   end
  
   private

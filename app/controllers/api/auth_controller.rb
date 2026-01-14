@@ -44,8 +44,7 @@ class Api::AuthController <ApplicationController
 
   #POST api/auth/logout
   def logout_user
-    token = extract_token
-    AuthService.logout_user(token)
+    AuthService.logout_user(current_user.id)
     render :logout_user, status: :ok
   end
 
