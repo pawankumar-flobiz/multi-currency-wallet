@@ -50,4 +50,15 @@ scope :by_currency, ->(currency) {
     scope
   }
 
+  scope :by_currency,->(currency_code){where(currency_code:currency_code)}
+  scope :by_balance,->(min_balance:,max_balance:){
+    if !min_balance.nil? && !max_balance.nil?
+      where("balance BETWEEN ? AND ?",min_balance,max_balance)
+    elsif !min_balance.nil?
+      where("balance >= ?",min_balance)
+    else 
+      where("balance <= ?",max_balance)    
+    end
+  }
+
 end

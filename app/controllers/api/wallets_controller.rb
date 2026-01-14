@@ -12,7 +12,6 @@ class Api::WalletsController< ApplicationController
     render :create,status: :created # not removed because status code always 200
   end
 
-
   # GET /api/wallets
   def index
     @wallets=current_user.wallets
