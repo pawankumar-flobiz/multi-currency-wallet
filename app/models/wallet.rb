@@ -19,6 +19,7 @@ class Wallet < ApplicationRecord
   validates :currency_code, uniqueness: { scope: :user_id }
   validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
+  scope :by_user,->(user_id){where(user_id:user_id)}
   scope :by_currency,->(currency_code){where(currency_code:currency_code)}
   scope :by_balance,->(min_balance:,max_balance:){
     if !min_balance.nil? && !max_balance.nil?

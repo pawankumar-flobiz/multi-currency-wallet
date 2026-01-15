@@ -1,6 +1,6 @@
 class Api::AuthController <ApplicationController
   
-  skip_before_action :authenticate_request,except:[:logout_user]
+  skip_before_action :authenticate_request,except:[:logout_user,:index,:show]
   
   wrap_parameters false
 
@@ -48,8 +48,30 @@ class Api::AuthController <ApplicationController
     render :logout_user, status: :ok
   end
 
+  #GET api/auth
+  def index
+    users = User.active
+
+    if auth_params[:name].present?
+      users = users.by_name(auth_params[:name])
+    end
+
+    if auth_params[:email].present?
+      users = users.by_email(auth_params[:email].downcase)
+    end
+
+    @users = users.page(auth_params[:page]).per(auth_params[:per_page] || 10)
+
+    render :index, status: :ok
+  end
+
+  #GET api/auth/:id
+  def show 
+    @user= User.active.find_by!(id:auth_params[:id])
+    render :show, status: :ok
+  end
   private 
   def auth_params
-    params.permit(:name,:email,:password,:otp)
+    params.permit(:name,:email,:password,:otp,:id,:page,:per_page)
   end
 end

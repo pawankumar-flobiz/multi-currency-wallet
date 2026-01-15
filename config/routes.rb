@@ -15,9 +15,14 @@ Rails.application.routes.draw do
       
       #logout route
       post "logout", to: "/api/auth#logout_user"
+
+      # show users
+      get ":id",  to: "/api/auth#show"
+      get "",  to: "/api/auth#index"
     end
     #create wallet ,list all wallets and show particular wallet
     resources :wallets, only: [:index, :create, :show]
+    resources :transfers,only: [:index,:create,:show]
   end
   #health check route
   get "health", to: "healths#index"

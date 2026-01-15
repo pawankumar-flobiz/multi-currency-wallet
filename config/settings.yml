@@ -11,4 +11,7 @@ otp:
 
 email:
   username: <%= ENV.fetch("EMAIL_USERNAME")%>  
-  password: <%= ENV.fetch("EMAIL_PASSWORD")%>  
+  password: <%= ENV.fetch("EMAIL_PASSWORD")%>
+
+exchange:
+  key: <%= ENV.fetch("EXCHANGE_RATE_API_KEY")%>
