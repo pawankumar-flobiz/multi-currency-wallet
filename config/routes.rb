@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
     #create wallet ,list all wallets and show particular wallet
     resources :wallets, only: [:index, :create, :show]
+    resources :transfers,only: [:index,:create,:show]
   end
   #health check route
   get "health", to: "healths#index"

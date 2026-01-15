@@ -18,4 +18,23 @@ class Transaction < ApplicationRecord
   validates :amount, numericality: { greater_than: 0 }
   validates :exchange_rate, numericality: { greater_than: 0 }
   validates :fee, numericality: { greater_than_or_equal_to: 0 }
+
+  scope :by_sender,->(sender_id){where(user_id:sender_id)}
+  scope :by_receiver,->(receiver_id){where(receiver_id:receiver_id)}
+  
+  scope :by_date, ->(start_date, end_date) do
+    if !start_date.nil? && !end_date.nil?
+      where(created_at: start_date..end_date)
+    elsif !start_date.nil?
+      where("created_at >= ?", start_date)
+    elsif !end_date.nil?
+      where("created_at <= ?", end_date)
+    else
+      all
+    end
+  end
+
+  scope :by_sender_currency,->(sender_currency){where(from_currency:sender_currency.downcase)}
+  scope :by_receiver_currency,->(receiver_currency){where(to_currency:receiver_currency.downcase)}
+
 end

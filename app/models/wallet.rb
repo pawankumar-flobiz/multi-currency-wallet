@@ -50,6 +50,7 @@ scope :by_currency, ->(currency) {
     scope
   }
 
+  scope :by_user,->(user_id){where(user_id:user_id)}
   scope :by_currency,->(currency_code){where(currency_code:currency_code)}
   scope :by_balance,->(min_balance:,max_balance:){
     if !min_balance.nil? && !max_balance.nil?
