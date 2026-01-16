@@ -8,4 +8,13 @@ class NotificationMailer < ApplicationMailer
       subject:"Transaction Details"
     )
   end
+
+  def daily_balance(user)
+    @user=user
+    @wallets=user.wallets
+    mail(
+      to: user.email,
+      subject: "Your Daily Wallet Balance"
+    )
+  end
 end

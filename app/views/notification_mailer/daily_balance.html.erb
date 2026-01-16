@@ -1,0 +1,18 @@
+<h2>Hello <%= @user.name %>,</h2>
+
+<p>your wallets balance</p>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Currency</th>
+    <th>Balance</th>
+  </tr>
+
+  <% @wallets.each do |wallet| %>
+    <tr>
+      <td><%= wallet.currency_code.upcase %></td>
+      <td><%= wallet.balance %></td>
+    </tr>
+  <% end %>
+</table>
+
