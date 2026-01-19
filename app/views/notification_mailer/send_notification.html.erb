@@ -1,0 +1,12 @@
+Hello <%= @user.name %>,
+
+
+<% if @message_type == "CREDIT" %>
+You have received <%= @transaction.amount %> <%= @transaction.to_currency.upcase %>.
+<% else %>
+You have sent <%= @transaction.total_amount %> <%= @transaction.from_currency.upcase %>.
+Fee charged: <%= @transaction.fee %>
+<% end %>
+
+Transaction ID: <%= @transaction.id %>
+Date: <%= @transaction.created_at %>

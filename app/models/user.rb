@@ -22,7 +22,13 @@ class User < ApplicationRecord
 
   validates :password, presence: true, on: :create
 
-  scope :active, ->{where(deleted_at: nil)}  
+  scope :active, ->{ where( deleted_at: nil) }  
+
+  scope :by_name, ->(name){
+    where("name ILIKE ?", "%#{name}%") if name.present?
+  }
+
+  scope :by_email, ->(email){where(email:email.downcase)}
 
   def email_verified?
     email_verified_at.present?

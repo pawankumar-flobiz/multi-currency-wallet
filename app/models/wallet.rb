@@ -27,7 +27,7 @@ class Wallet < ApplicationRecord
               greater_than_or_equal_to: 0
             }
 
-scope :by_currency, ->(currency) {
+  scope :by_currency, ->(currency) {
     where(currency_code: currency) if currency.present?
   }
 
@@ -49,5 +49,6 @@ scope :by_currency, ->(currency) {
     )
     scope
   }
+
 
 end
