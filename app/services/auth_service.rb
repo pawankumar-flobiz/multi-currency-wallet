@@ -21,7 +21,7 @@ class AuthService
     end
 
     #Send otp  by email
-    OtpMailer.with(user:user).send_otp.deliver_later
+    OtpMailerWorker.perform_async(user.id)
     user
   end
 
@@ -56,8 +56,8 @@ class AuthService
 
     user.update!(otp_sent_at: Time.current)
 
-    #Send OTP via email Using Mailer
-    OtpMailer.with(user:user).send_otp.deliver_later
+    #Send OTP via email Using MailerWorker
+    OtpMailerWorker.perform_async(user.id)
     user
   end
 

@@ -2,7 +2,6 @@ class Api::AuthController <ApplicationController
   
   skip_before_action :authenticate_request,except:[:logout_user]
   
-  wrap_parameters false
 
   #POST api/auth/check-email
   def check_email
@@ -25,13 +24,12 @@ class Api::AuthController <ApplicationController
   # POST api/auth/signup/verify
   def email_verify
     @user=AuthService.email_verify(auth_params)
-    render :email_verify,status: :ok
+
   end
 
   #POST api/auth/login/request
   def login_request
-    user=AuthService.login_request(auth_params)
-    render :login_request ,status: :ok
+    @user=AuthService.login_request(auth_params)
   end    
 
   #POST api/auth/login/verify
@@ -39,7 +37,6 @@ class Api::AuthController <ApplicationController
     result=AuthService.login_verify(auth_params)
     @token = result[:token]
     @user  = result[:user]
-    render :login_verify, status: :ok
   end 
 
   #POST api/auth/logout
