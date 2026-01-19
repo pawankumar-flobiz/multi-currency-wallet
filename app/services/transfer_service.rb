@@ -54,8 +54,16 @@ class TransferService
     end
 
     #sending email notification to sender and receiver
-    NotificationMailer.with(user:sender,transaction:transaction,message_type:"DEBIT").send_notification.deliver_later
-    NotificationMailer.with(user:receiver,transaction:transaction,message_type:"CREDIT").send_notification.deliver_later
+    TransactionNotificationWorker.perform_async(
+                                  sender.id,
+                                  transaction.id,
+                                  "DEBIT"
+    )
+    TransactionNotificationWorker.perform_async(
+                                  receiver.id,
+                                  transaction.id,
+                                  "CREDIT"
+    )
     transaction
   end
 

@@ -27,7 +27,7 @@ class Wallet < ApplicationRecord
               greater_than_or_equal_to: 0
             }
 
-scope :by_currency, ->(currency) {
+  scope :by_currency, ->(currency) {
     where(currency_code: currency) if currency.present?
   }
 
@@ -50,16 +50,5 @@ scope :by_currency, ->(currency) {
     scope
   }
 
-  scope :by_user,->(user_id){where(user_id:user_id)}
-  scope :by_currency,->(currency_code){where(currency_code:currency_code)}
-  scope :by_balance,->(min_balance:,max_balance:){
-    if !min_balance.nil? && !max_balance.nil?
-      where("balance BETWEEN ? AND ?",min_balance,max_balance)
-    elsif !min_balance.nil?
-      where("balance >= ?",min_balance)
-    else 
-      where("balance <= ?",max_balance)    
-    end
-  }
 
 end
