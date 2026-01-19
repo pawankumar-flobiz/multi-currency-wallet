@@ -1,6 +1,5 @@
 class Api::WalletsController< ApplicationController
-    wrap_parameters false
-
+    
   # POST /api/wallets
   def create
     
@@ -10,33 +9,36 @@ class Api::WalletsController< ApplicationController
       balance:wallet_params[:balance]
     )
 
-    render :create,status: :created
+    render :create,status: :created # not removed because status code always 200
   end
 
 
   # GET /api/wallets
   def index
-    @wallets=current_user.wallets;
-    if wallet_params[:currency_code]
-      @wallets=@wallets.by_currency(wallet_params[:currency_code])
-    end  
-    if wallet_params[:min_balance]|| wallet_params[:max_balance]
-      @wallets=@wallets.by_balance(min_balance:wallet_params[:min_balance],max_balance:wallet_params[:max_balance]) 
-    end
-    @wallets=@wallets.page(wallet_params[:page]).per(wallet_params[:per_page] || 5)
-    render :index,status: :ok
+    @wallets=current_user.wallets
+                         .filtered(wallet_params)
+                         .page(wallet_params[:page] || 1)
+                         .per(wallet_params[:per_page]|| 5)
 
   end
 
   #GET /api/wallets/:id
   def show
     @wallet=current_user.wallets.find_by!(id:wallet_params[:id])
-    render :show,status: :ok
   end
+
   private
 
   def wallet_params
-    params.permit(:id,:currency_code,:balance,:min_balance,:max_balance)
+    params.permit(
+      :id,
+      :currency_code,
+      :balance,
+      :min_balance,
+      :max_balance,
+      :page,
+      :per_page
+    )
   end
 end
 
